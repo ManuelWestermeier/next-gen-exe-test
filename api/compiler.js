@@ -43,7 +43,23 @@ module.exports = class Compiler {
 
         const fileData = getFileData(pathName)
 
-        return fileData
+        return fileData.split(/\r\n|\n/g).map(line => {
+
+            if (line.startsWith("@import")) {
+
+                const pathToFile = line.split(/ |  |   |\t/g)[1]
+
+                return this.compileFile(
+                    path.join(
+                        path.dirname(pathName),
+                        pathToFile
+                    )
+                )
+
+            } else
+                return line
+
+        }).join("\n")
 
     }
 
