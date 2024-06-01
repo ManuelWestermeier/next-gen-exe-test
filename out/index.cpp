@@ -9452,3 +9452,45 @@ using namespace httplib;
 using namespace std;
 
 //run
+        void run(Server *server, int port, string rootPath)
+{
+    string runCmd = "start http://localhost:" + port + rootPath;
+
+    system(runCmd.c_str());
+
+    server->listen("0.0.0.0", port);
+}
+        //client header
+        
+        //client code
+        int main(int argc, char** argv) {
+            Server server;
+
+
+server.Get("/", [&](const Request &, Response &res) {
+  res.set_content("Hello World!", "text/plain");
+});
+
+server.set_error_handler([](const auto& req, auto& res) {
+  auto fmt = "<p>Error Status: <span style='color:red;'>%d</span></p>";
+  char buf[BUFSIZ];
+  snprintf(buf, sizeof(buf), fmt, res.status);
+  res.set_content(buf, "text/html");
+});
+
+server.set_exception_handler([](const auto& req, auto& res, std::exception_ptr ep) {
+  auto fmt = "<h1>Error 500</h1><p>%s</p>";
+  char buf[BUFSIZ];
+  try {
+    std::rethrow_exception(ep);
+  } catch (std::exception &e) {
+    snprintf(buf, sizeof(buf), fmt, e.what());
+  } catch (...) { // See the following NOTE
+    snprintf(buf, sizeof(buf), fmt, "Unknown Exception");
+  }
+  res.set_content(buf, "text/html");
+  res.status = StatusCode::InternalServerError_500;
+});
+
+run(&server, 5678, "/");
+        }
