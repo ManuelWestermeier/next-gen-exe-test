@@ -1,3 +1,4 @@
+const { error } = require("console")
 const fs = require("fs")
 const { exit } = require("process")
 

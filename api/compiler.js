@@ -2,6 +2,9 @@ const path = require("path")
 const fs = require("fs")
 const { error } = require("console")
 const { getFileData } = require("./utils/get-file-data")
+const { getFunctionFromLine } = require("./utils/get-function-from-line")
+const { exit } = require("process")
+const { getTemplate } = require("./utils/get-template")
 
 module.exports = class Compiler {
 
@@ -43,11 +46,13 @@ module.exports = class Compiler {
 
         const fileData = getFileData(pathName)
 
-        return fileData.split(/\r\n|\n/g).map(line => {
+        return fileData.split(/\r\n|\n/g).map((_line, lineIndex) => {
 
-            if (line.startsWith("@import")) {
+            const [fn, line] = getFunctionFromLine(_line)
 
-                const pathToFile = line.split(/ |  |   |\t/g)[1]
+            if (fn == "@import") {
+
+                const pathToFile = line.split(/ |\t/g)[1]
 
                 return this.compileFile(
                     path.join(
@@ -56,7 +61,20 @@ module.exports = class Compiler {
                     )
                 )
 
-            } else
+            }
+            else if (fn == "@template") {
+
+                const args = line.split(/ |\t/g)
+
+                if (args[2] != "from" || args.length != 4) {
+                    error(`${pathName}:${lineIndex} error template syntax`)
+                    exit(1)
+                }
+
+                return `string ${args[1]} = ${getTemplate(args[3], pathName)};`
+
+            }
+            else
                 return line
 
         }).join("\n")
