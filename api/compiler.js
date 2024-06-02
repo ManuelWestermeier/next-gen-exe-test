@@ -5,6 +5,7 @@ const { getFileData } = require("./utils/get-file-data")
 const { getFunctionFromLine } = require("./utils/get-function-from-line")
 const { exit } = require("process")
 const { getTemplate } = require("./utils/get-template")
+const { copyDirectory } = require("./utils/copy-dir")
 
 module.exports = class Compiler {
 
@@ -23,7 +24,10 @@ module.exports = class Compiler {
         ))
 
         this.indexFilePath = path.join(root, entry)
-        this.outFilePath = outPath
+        this.outFilePath = path.join(outPath, "index.cpp")
+
+        this.assetsDir = path.join(root, this.config.assets)
+        this.outAssetsDir = path.join(outPath, this.config.assets)
 
         this.compile()
     }
@@ -31,14 +35,22 @@ module.exports = class Compiler {
     compile() {
 
         const clientCode = this.compileFile(this.indexFilePath)
-        fs.writeFileSync(this.outFilePath, `${fs.readFileSync("api/httplib.h", "utf-8")}
-        ${fs.readFileSync("api/std.cpp", "utf-8")}
-        //client header
-        ${this.fileHeader}
-        //client code
-        int main(int argc, char** argv) {
-            ${clientCode}
-        }`, "utf-8")
+
+        fs.unlinkSync(path.dirname(this.outFilePath))
+        fs.mkdir(path.dirname(this.outFilePath), { recursive: true })
+
+        fs.writeFileSync(this.outFilePath,
+            `${fs.readFileSync("api/httplib.h", "utf-8")}
+            ${fs.readFileSync("api/std.cpp", "utf-8")}
+            //client header
+            ${this.fileHeader}
+            //client code
+            int main(int argc, char** argv) {
+                ${clientCode}
+            }`,
+            "utf-8")
+
+        copyDirectory(this.assetsDir, this.outAssetsDir)
 
     }
 

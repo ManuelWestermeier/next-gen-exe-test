@@ -9452,45 +9452,58 @@ using namespace httplib;
 using namespace std;
 
 //run
-        void run(Server *server, int port, string rootPath)
+            void run(Server *server, int port, const std::string &rootPath)
 {
-    string runCmd = "start http://localhost:" + port + rootPath;
-
+    // Construct the command to open the URL in the default web browser
+    std::string runCmd = "start http://localhost:" + std::to_string(port) + rootPath;
     system(runCmd.c_str());
 
-    server->listen("0.0.0.0", port);
+    // Start the server and listen on the specified port
+    if (!server->listen("0.0.0.0", port))
+    {
+        std::cerr << "Error: Failed to start the server on port " << port << std::endl;
+    }
 }
-        //client header
-        
-        //client code
-        int main(int argc, char** argv) {
-            Server server;
+            //client header
+            
+            //client code
+            int main(int argc, char** argv) {
+                Server server;
 
+int trafficCount = 0;
 
-server.Get("/", [&](const Request &, Response &res) {
-  res.set_content("Hello World!", "text/plain");
+//main page
+server.Get("/", [&](const Request req, Response &res) {
+string ct = "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Hello World</title>\n    <link rel=\"image/png\" href=\"logo.png\">\n    <link rel=\"stylesheet\" href=\"assets/index.css\">\n</head>\n\n<body>\n    <h1>\n        Hello World\n    </h1>\n    <hr>\n    <p>\n        Traffic : " + to_string(trafficCount) + "\n    </p>\n    <hr>\n    <img src=\"assets/logo.png\" alt=\"Logo\">\n</body>\n\n</html>";
+
+trafficCount++;
+
+res.set_content(ct, "text/html");
 });
 
+//assets public serverd
+server.set_mount_point("/assets", "./assets");
+
 server.set_error_handler([](const auto& req, auto& res) {
-  auto fmt = "<p>Error Status: <span style='color:red;'>%d</span></p>";
-  char buf[BUFSIZ];
-  snprintf(buf, sizeof(buf), fmt, res.status);
-  res.set_content(buf, "text/html");
+auto fmt = "<p>Error Status: <span style='color:red;'>%d</span></p>";
+char buf[BUFSIZ];
+snprintf(buf, sizeof(buf), fmt, res.status);
+res.set_content(buf, "text/html");
 });
 
 server.set_exception_handler([](const auto& req, auto& res, std::exception_ptr ep) {
-  auto fmt = "<h1>Error 500</h1><p>%s</p>";
-  char buf[BUFSIZ];
-  try {
-    std::rethrow_exception(ep);
-  } catch (std::exception &e) {
-    snprintf(buf, sizeof(buf), fmt, e.what());
-  } catch (...) { // See the following NOTE
-    snprintf(buf, sizeof(buf), fmt, "Unknown Exception");
-  }
-  res.set_content(buf, "text/html");
-  res.status = StatusCode::InternalServerError_500;
+auto fmt = "<h1>Error 500</h1><p>%s</p>";
+char buf[BUFSIZ];
+try {
+std::rethrow_exception(ep);
+} catch (std::exception &e) {
+snprintf(buf, sizeof(buf), fmt, e.what());
+} catch (...) { // See the following NOTE
+snprintf(buf, sizeof(buf), fmt, "Unknown Exception");
+}
+res.set_content(buf, "text/html");
+res.status = StatusCode::InternalServerError_500;
 });
 
 run(&server, 5678, "/");
-        }
+            }
