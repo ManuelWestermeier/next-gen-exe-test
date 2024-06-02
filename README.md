@@ -139,3 +139,13 @@ terminal output :
 ```txt
 ##Manuel is 14 years old.
 ```
+
+### 4. Run
+
+Compile the outputfile with some c++ compiler 
+
+(I use Visual Strudio)
+
+make shure that the executable is in the folder with the assets folder
+
+Then run the executable
