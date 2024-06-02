@@ -7,6 +7,7 @@ const { exit } = require("process")
 const { getTemplate } = require("./utils/get-template")
 const { copyDirectory } = require("./utils/copy-dir")
 
+
 module.exports = class Compiler {
 
     fileHeader = ""
@@ -17,7 +18,6 @@ module.exports = class Compiler {
         config = "config.json",
         outPath = "out"
     }) {
-
         this.config = JSON.parse(fs.readFileSync(
             path.join(root, config),
             "utf-8"
