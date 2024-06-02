@@ -1,7 +1,7 @@
 cls
 git add .
-git commit -m "first commit"
+git commit -m "update"
 git branch -M main
-git remote add origin https://github.com/ManuelWestermeier/next-gen-exe.git
+git remote add origin https://github.com/ManuelWestermeier/next-gen-exe-test.git
 git push -u origin main
 cls
