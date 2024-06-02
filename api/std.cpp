@@ -25,7 +25,6 @@ void serve_public(httplib::Server &server, const std::string &mount_point, const
 {
     // Set the mount point for serving static files
     server.set_mount_point(mount_point, dir);
-
     server.set_file_request_handler(is_localhost);
 }
 
