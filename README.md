@@ -107,6 +107,8 @@ in the template file
 Hallo World ## your c++ expression ##
 ```
 
+if you want to use a ## in the template file you use ##dbhash##
+
 bsp:
 
 test.w
@@ -115,11 +117,13 @@ string name = "Manuel";
 int age = 14;
 
 @template x from x.txt
+
+cout << x << endl;
 ```
 
 x.txt
 ```txt
-##name## is ##sf(age)## years old.
+##dbhash####name## is ##sf(age)## years old.
 ```
 
 returns:
@@ -127,9 +131,10 @@ returns:
 string name = "Manuel";
 int age = 14;
 
-string x = name + " is " + to_string(age) + " years old."; 
+string x = "##" + name + " is " + to_string(age) + " years old."; 
 ```
 
-x.txt
-
-if you want to use a ## in the template file you use ##dbhash##
+terminal output : 
+```txt
+##Manuel is 14 years old.
+```
