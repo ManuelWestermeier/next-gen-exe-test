@@ -149,3 +149,11 @@ Compile the outputfile with some c++ compiler
 make shure that the executable is in the folder with the assets folder
 
 Then run the executable
+
+## More Complex applications
+
+use something like vite and react and build it in the assets folder
+
+make some backend lowlevel routes to handle things like fs
+
+build it and present is to your clients
