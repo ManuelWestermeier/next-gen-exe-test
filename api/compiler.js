@@ -36,8 +36,15 @@ module.exports = class Compiler {
 
         const clientCode = this.compileFile(this.indexFilePath)
 
-        fs.unlinkSync(path.dirname(this.outFilePath))
-        fs.mkdir(path.dirname(this.outFilePath), { recursive: true })
+        const directoryPath = path.dirname(this.outFilePath);
+
+        // Remove the directory and its contents
+        if (fs.existsSync(directoryPath)) {
+          fs.rmSync(directoryPath, { recursive: true, force: true });
+        }
+        
+        // Create the directory
+        fs.mkdirSync(directoryPath, { recursive: true });
 
         fs.writeFileSync(this.outFilePath,
             `${fs.readFileSync("api/httplib.h", "utf-8")}

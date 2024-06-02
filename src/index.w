@@ -3,23 +3,30 @@ Server server;
 int trafficCount = 0;
 
 //main page
-server.Get("/", [&](const Request req, Response &res) {
+server.Get("/", make_localhost_handler([&](const Request req, Response &res) {
   @template ct from frontend/index.html
   
   trafficCount++;
 
   res.set_content(ct, "text/html");
-});
+}));
+
+//secound page
+server.Get("/page/:id", make_localhost_handler([&](const Request& req, Response& res) {
+    int pageId = stoi(req.path_params.at("id"));
+    @template page from frontend/page.html
+    res.set_content(page, "text/html");
+}));
 
 //css style
-server.Get("/style", [&](const Request req, Response &res) {
+server.Get("/style", make_localhost_handler([&](const Request req, Response &res) {
   @template ct from frontend/index.css
 
   res.set_content(ct, "text/css");
-});
+}));
 
 //assets public serverd
-server.set_mount_point("/assets", "./assets");
+serve_public(server, "/assets", "./assets");
 
 @import server/error-handeler.w
 

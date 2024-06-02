@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>Page ##to_string(pageId)##</title>
     <!--icon public served-->
     <link rel="icon" type="image/png" href="/assets/logo.png">
     <!--style from server-->
@@ -14,14 +14,11 @@
 <body>
     <h1>
         <img src="/assets/logo.png" alt="Logo">
-        Hello World
+        This is the page with id : ##to_string(pageId)##
     </h1>
     <hr>
-    <p>
-        Traffic : ##to_string(trafficCount)##
-    </p>
-    <hr>
-    <a href="/page/1">[Pages]</a>
+    <a href="/page/##to_string(pageId - 1)##">[Last User]</a>
+    <a href="/page/##to_string(pageId + 1)##">[Next User]</a>
 </body>
 
 </html>
