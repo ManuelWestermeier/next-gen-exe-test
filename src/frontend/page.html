@@ -4,21 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page ##to_string(pageId)##</title>
+    <title>Page ##sf(pageId)##</title>
     <!--icon public served-->
     <link rel="icon" type="image/png" href="/assets/logo.png">
     <!--style from server-->
     <link rel="stylesheet" href="/style">
+    <!--if you want to use a double hash you have to use ##dbhash##-->
 </head>
 
 <body>
     <h1>
         <img src="/assets/logo.png" alt="Logo">
-        This is the page with id : ##to_string(pageId)##
+        This is the page with id : ##sf(pageId)##
     </h1>
     <hr>
-    <a href="/page/##to_string(pageId - 1)##">[Last User]</a>
-    <a href="/page/##to_string(pageId + 1)##">[Next User]</a>
+    <img style="width: 100%; height: calc(100dvh - 300px); object-fit: cover; background-color: black;"
+        src="https://picsum.photos/id/##sf(pageId + 600)##/1200/800/" alt="profile image ##sf(pageId)##">
+    <hr>
+    <a href="/page/##sf(pageId - 1)##">[Last User]</a>
+    <a href="/page/##sf(pageId + 1)##">[Next User]</a>
 </body>
 
 </html>

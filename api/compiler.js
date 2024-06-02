@@ -40,9 +40,9 @@ module.exports = class Compiler {
 
         // Remove the directory and its contents
         if (fs.existsSync(directoryPath)) {
-          fs.rmSync(directoryPath, { recursive: true, force: true });
+            fs.rmSync(directoryPath, { recursive: true, force: true });
         }
-        
+
         // Create the directory
         fs.mkdirSync(directoryPath, { recursive: true });
 
@@ -93,8 +93,12 @@ module.exports = class Compiler {
                 return `string ${args[1]} = ${getTemplate(args[3], pathName)};`
 
             }
-            else
-                return line
+            else if (fn == "@top") {
+                const lineWithoutFn = line.split(" ")
+                this.fileHeader += lineWithoutFn.slice(1, lineWithoutFn.length).join(" ") + "\n"
+            }
+
+            else return line
 
         }).join("\n")
 

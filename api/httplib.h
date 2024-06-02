@@ -9792,4 +9792,7 @@ inline SSL_CTX *Client::ssl_context() const {
 using namespace httplib;
 using namespace std;
 
+#define sf to_string
+#define dbhash "##"
+
 //run
