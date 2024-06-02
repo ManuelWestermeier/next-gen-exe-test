@@ -154,6 +154,6 @@ Then run the executable
 
 use something like vite and react and build it in the assets folder
 
-make some backend lowlevel routes to handle things like fs
+make some backend lowlevel routes to handle things like storage
 
 build it and present is to your clients
