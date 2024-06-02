@@ -48,6 +48,7 @@ output =
 {code of the @top compiler function}
 int main(int argc, char** argv) {
     {compiled code}
+    return 0;
 }
 ```
 

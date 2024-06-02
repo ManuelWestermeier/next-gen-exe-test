@@ -54,6 +54,7 @@ module.exports = class Compiler {
             //client code
             int main(int argc, char** argv) {
                 ${clientCode}
+                return 0;
             }`,
             "utf-8")
 
