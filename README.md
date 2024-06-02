@@ -97,10 +97,39 @@ the template files are directly compiled to c++ strings
 
 using syntax : 
 
-@template {c++ string variable} from {path to template file (it can have all extensions)}
+```cpp
+@template { c++ string variable } from { path to template file (it can have all extensions) }
+```
 
 in the template file
 
 ```txt
-
+Hallo World ## your c++ expression ##
 ```
+
+bsp:
+
+test.w
+```cpp
+string name = "Manuel";
+int age = 14;
+
+@template x from x.txt
+```
+
+x.txt
+```txt
+##name## is ##sf(age)## years old.
+```
+
+returns:
+```cpp
+string name = "Manuel";
+int age = 14;
+
+string x = name + " is " + to_string(age) + " years old."; 
+```
+
+x.txt
+
+if you want to use a ## in the template file you use ##dbhash##
