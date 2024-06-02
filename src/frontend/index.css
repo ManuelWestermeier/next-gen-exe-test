@@ -23,3 +23,8 @@ h1 {
 img {
     width: 50px;
 }
+
+a {
+    text-decoration: none;
+    color: goldenrod;
+}

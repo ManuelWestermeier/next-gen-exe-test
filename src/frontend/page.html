@@ -14,12 +14,14 @@
 
 <body>
     <h1>
-        <img src="/assets/logo.png" alt="Logo">
+        <a href="/">
+            <img src="/assets/logo.png" alt="Logo">
+        </a>
         This is the page with id : ##sf(pageId)##
     </h1>
     <hr>
     <img style="width: 100%; height: calc(100dvh - 300px); object-fit: cover; background-color: black;"
-        src="https://picsum.photos/id/##sf(pageId + 600)##/1200/800/" alt="profile image ##sf(pageId)##">
+        src="https://picsum.photos/id/##sf(pageId)##/1200/800/" alt="profile image ##sf(pageId)##">
     <hr>
     <a href="/page/##sf(pageId - 1)##">[Last User]</a>
     <a href="/page/##sf(pageId + 1)##">[Next User]</a>

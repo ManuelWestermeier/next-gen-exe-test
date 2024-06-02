@@ -9849,7 +9849,7 @@ int trafficCount = 0;
 
 //main page
 server.Get("/", make_localhost_handler([&](const Request req, Response &res) {
-string ct = "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Hello World</title>\n    <!--icon public served-->\n    <link rel=\"icon\" type=\"image/png\" href=\"/assets/logo.png\">\n    <!--style from server-->\n    <link rel=\"stylesheet\" href=\"/style\">\n</head>\n\n<body>\n    <h1>\n        <img src=\"/assets/logo.png\" alt=\"Logo\">\n        Hello World\n        <a href=\"/close\">\n            [Close App]\n        </a>\n    </h1>\n    <hr>\n    <p>\n        Traffic : " + sf(trafficCount) + "\n    </p>\n    <hr>\n    <a href=\"/page/1\">[Pages]</a>\n</body>\n\n</html>";
+string ct = "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Hello World</title>\n    <!--icon public served-->\n    <link rel=\"icon\" type=\"image/png\" href=\"/assets/logo.png\">\n    <!--style from server-->\n    <link rel=\"stylesheet\" href=\"/style\">\n</head>\n\n<body>\n    <h1>\n        <a href=\"/\">\n            <img src=\"/assets/logo.png\" alt=\"Logo\">\n        </a>\n        Hello World\n        <a href=\"/close\">\n            [Close App]\n        </a>\n    </h1>\n    <hr>\n    <p>\n        Traffic : " + sf(trafficCount) + "\n    </p>\n    <hr>\n    <a href=\"/page/1\">[Pages]</a>\n</body>\n\n</html>";
 
 trafficCount++;
 
@@ -9859,13 +9859,13 @@ res.set_content(ct, "text/html");
 //secound page
 server.Get("/page/:id", make_localhost_handler([&](const Request& req, Response& res) {
 int pageId = stoi(req.path_params.at("id"));
-string page = "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Page " + sf(pageId) + "</title>\n    <!--icon public served-->\n    <link rel=\"icon\" type=\"image/png\" href=\"/assets/logo.png\">\n    <!--style from server-->\n    <link rel=\"stylesheet\" href=\"/style\">\n    <!--if you want to use a double hash you have to use " + dbhash + "-->\n</head>\n\n<body>\n    <h1>\n        <img src=\"/assets/logo.png\" alt=\"Logo\">\n        This is the page with id : " + sf(pageId) + "\n    </h1>\n    <hr>\n    <img style=\"width: 100%; height: calc(100dvh - 300px); object-fit: cover; background-color: black;\"\n        src=\"https://picsum.photos/id/" + sf(pageId + 600) + "/1200/800/\" alt=\"profile image " + sf(pageId) + "\">\n    <hr>\n    <a href=\"/page/" + sf(pageId - 1) + "\">[Last User]</a>\n    <a href=\"/page/" + sf(pageId + 1) + "\">[Next User]</a>\n</body>\n\n</html>";
+string page = "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Page " + sf(pageId) + "</title>\n    <!--icon public served-->\n    <link rel=\"icon\" type=\"image/png\" href=\"/assets/logo.png\">\n    <!--style from server-->\n    <link rel=\"stylesheet\" href=\"/style\">\n    <!--if you want to use a double hash you have to use " + dbhash + "-->\n</head>\n\n<body>\n    <h1>\n        <a href=\"/\">\n            <img src=\"/assets/logo.png\" alt=\"Logo\">\n        </a>\n        This is the page with id : " + sf(pageId) + "\n    </h1>\n    <hr>\n    <img style=\"width: 100%; height: calc(100dvh - 300px); object-fit: cover; background-color: black;\"\n        src=\"https://picsum.photos/id/" + sf(pageId) + "/1200/800/\" alt=\"profile image " + sf(pageId) + "\">\n    <hr>\n    <a href=\"/page/" + sf(pageId - 1) + "\">[Last User]</a>\n    <a href=\"/page/" + sf(pageId + 1) + "\">[Next User]</a>\n</body>\n\n</html>";
 res.set_content(page, "text/html");
 }));
 
 //css style
 server.Get("/style", make_localhost_handler([&](const Request req, Response &res) {
-string ct = "* {\n    margin: 0;\n    padding: 0;\n    font-family: monospace;\n}\n\nbody {\n    margin: 10px;\n    padding: 10px;\n}\n\np,\nh1 {\n    margin: 10px;\n}\n\nh1 {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n}\n\nimg {\n    width: 50px;\n}";
+string ct = "* {\n    margin: 0;\n    padding: 0;\n    font-family: monospace;\n}\n\nbody {\n    margin: 10px;\n    padding: 10px;\n}\n\np,\nh1 {\n    margin: 10px;\n}\n\nh1 {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n}\n\nimg {\n    width: 50px;\n}\n\na {\n    text-decoration: none;\n    color: goldenrod;\n}";
 
 res.set_content(ct, "text/css");
 }));
