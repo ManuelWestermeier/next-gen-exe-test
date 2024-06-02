@@ -21,13 +21,13 @@ module.exports = class Compiler {
         this.config = JSON.parse(fs.readFileSync(
             path.join(root, config),
             "utf-8"
-        ))
+        ) || "{}")
 
         this.indexFilePath = path.join(root, entry)
         this.outFilePath = path.join(outPath, "index.cpp")
 
-        this.assetsDir = path.join(root, this.config.assets)
-        this.outAssetsDir = path.join(outPath, this.config.assets)
+        this.assetsDir = path.join(root, this.config?.assets || "assets")
+        this.outAssetsDir = path.join(outPath, this.config?.assets || "assets")
 
         this.compile()
     }
