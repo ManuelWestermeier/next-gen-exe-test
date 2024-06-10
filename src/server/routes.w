@@ -38,6 +38,10 @@ server.Get("/add", make_localhost_handler([&](const Request req, Response &res) 
 
   todos.push_back(newTodo);
 
-  res.set_content("<script>window.location = \"/\"</script>", "text/html");
+  string to = "/";
+
+  @template ct from ../frontend/comp/navigate.html
+  
+  res.set_content(ct, "text/html");
 
 }));
