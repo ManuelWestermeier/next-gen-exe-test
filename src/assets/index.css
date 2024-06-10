@@ -1,0 +1,93 @@
+:root {
+    --b: #111;
+    --c: rgb(243, 243, 243);
+    --a: dodgerblue;
+    --d: rgb(255, 5, 5);
+}
+
+* {
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: var(--b);
+    color: var(--c);
+}
+
+a,
+button {
+    cursor: pointer;
+    text-decoration: none;
+    padding: 5px;
+    margin: 5px;
+    user-select: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--b);
+    color: var(--c);
+}
+
+.close-btn {
+    background-color: var(--d);
+    width: 30px;
+    height: 30px;
+}
+
+div {
+    margin: 5px;
+    padding: 5px;
+}
+
+header,
+main,
+footer {
+    margin: 10px;
+    padding: 10px;
+}
+
+main {
+    min-height: 100dvh;
+}
+
+footer,
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header a:last-child {
+    margin-left: auto;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button,
+input,
+textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid var(--a);
+    outline: none;
+    background-color: var(--b);
+    color: var(--c);
+    resize: none;
+    width: 100%;
+    display: block;
+    max-width: 300px;
+    margin: auto;
+}
+
+::placeholder {
+    color: var(--c);
+}
