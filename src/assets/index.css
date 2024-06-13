@@ -92,16 +92,51 @@ textarea {
     color: var(--c);
 }
 
-.todos {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
 .todo {
-    width: 400px;
-    min-height: 200px;
+    width: calc(100% - 40px);
     border-radius: 5px;
     padding: 10px;
     box-shadow: 0 0 10px 0 var(--a);
+    margin: 10px;
+    position: relative;
+    padding-bottom: 30px;
+    min-height: 20px;
+}
+
+.todo .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    height: 20px;
+    gap: 20px;
+}
+
+main {
+    display: flex;
+}
+
+.left {
+    padding: 10px;
+    margin: 10px;
+    height: calc(100dvh - 145px);
+    overflow: hidden;
+    overflow-y: auto;
+    float: left;
+    width: calc(100% - 400px);
+    display: flex;
+    flex-direction: column;
+}
+
+.right {
+    max-width: 300px;
+    padding: 20px;
+    height: calc(100dvh - 145px);
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
