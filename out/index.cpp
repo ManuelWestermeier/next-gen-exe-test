@@ -9987,7 +9987,7 @@ server.stop();
 ////$(SolutionDir)$(Platform)\$(Configuration)
 
 //assets public serverd
-serve_public(server, "/assets", "./assets");
+serve_public(server, "/assets", "assets");
 
 server.set_error_handler([](const auto& req, auto& res) {
 auto fmt = "<p>Error Status: <span style='color:red;'>%d</span></p>";

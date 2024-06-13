@@ -5,7 +5,7 @@ Server server;
 @import server/routes.w
 
 //assets public serverd
-serve_public(server, "/assets", "./assets");
+serve_public(server, "/assets", "assets");
 
 @import server/error-handeler.w
 
