@@ -10,7 +10,6 @@ auto getTodosHtml = [&]() {
 // Main page
 server.Get("/", make_localhost_handler([&](const Request &req, Response &res) {
   @template addForm from ../../frontend/comp/add-form.html
-  string toDosHtml = getTodosHtml();
   @template ct from ../../frontend/index.html
 
   res.set_content(ct, "text/html");

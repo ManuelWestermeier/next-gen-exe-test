@@ -9875,10 +9875,91 @@ std::chrono::system_clock::now()
 })();
 };
 
-vector<Todo> todos = ([]() {
-vector<Todo> data;
-return data;
+string fileName = ".tododata";
+
+vector<Todo> todos = ([&]() {
+std::vector<Todo> todos;
+std::ifstream file(fileName);
+
+if (!file.is_open()) {
+std::cerr << "Error opening file: " << fileName << std::endl;
+return todos;
+}
+
+std::string line;
+Todo todo;
+
+while (std::getline(file, line)) {
+todo.title = line;
+
+if (std::getline(file, line)) {
+todo.content = line;
+} else {
+break;
+}
+
+if (std::getline(file, line)) {
+todo.date = line;
+} else {
+break;
+}
+
+if (std::getline(file, line)) {
+todo.completed = (line == "1");
+} else {
+break;
+}
+
+if (std::getline(file, line)) {
+todo.id = std::stoi(line);
+} else {
+break;
+}
+
+todos.push_back(todo);
+}
+
+file.close();
+
+return todos;
 })();
+
+auto writeFile = [](string fileName, string data) {
+
+//open file
+ofstream MyFile(fileName);
+//write file
+MyFile << data;
+//close file
+MyFile.close();
+
+};
+
+auto int2binarystring = [](int number) {
+
+};
+
+auto saveTodos = [&]() {
+
+std::ofstream file(fileName);
+
+if (!file.is_open()) {
+std::cerr << "Error opening file: " << std::endl;
+return;
+}
+
+for (const auto& todo : todos) {
+// Write each Todo item's details to the file
+file << todo.title << std::endl;
+file << todo.content << std::endl;
+file << todo.date << std::endl;
+file << (todo.completed ? '1' : '0') << std::endl;
+file << todo.id << std::endl;
+}
+
+file.close();
+
+};
 
 auto getTodosHtml = [&]() {
 string todosHtml = "";
@@ -9892,8 +9973,7 @@ return todosHtml;
 // Main page
 server.Get("/", make_localhost_handler([&](const Request &req, Response &res) {
 string addForm = "<form action=\"/add\">\n    <input type=\"text\" name=\"title\" placeholder=\"title...\">\n    <textarea name=\"content\" placeholder=\"todo...\"></textarea>\n    <button type=\"submit\">\n        Add\n    </button>\n</form>";
-string toDosHtml = getTodosHtml();
-string ct = "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>TODO APP</title>\n    <script src=\"/index.js\" defer></script>\n    <link rel=\"stylesheet\" href=\"/assets/index.css\">\n    <link rel=\"icon\" href=\"/assets/favicon.ico\">\n</head>\n\n<body>\n    <header>\n        <a href=\"/\">\n            [ TODO APP ]\n        </a>\n        <a href=\"/close\" class=\"close-btn\">\n            <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#e8eaed\">\n                <path\n                    d=\"m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z\" />\n            </svg>\n        </a>\n    </header>\n    <main>\n        <div class=\"left\">\n            " + toDosHtml + "\n        </div>\n        <div class=\"right\">\n            " + addForm + "\n        </div>\n    </main>\n    <footer>\n        @copyright Manuel Westermeier\n    </footer>\n</body>\n\n</html>";
+string ct = "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>TODO APP</title>\n    <script src=\"/index.js\" defer></script>\n    <link rel=\"stylesheet\" href=\"/assets/index.css\">\n    <link rel=\"icon\" href=\"/assets/favicon.ico\">\n</head>\n\n<body>\n    <header>\n        <a href=\"/\">\n            [ TODO APP ]\n        </a>\n        <a href=\"/close\" class=\"close-btn\">\n            <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#e8eaed\">\n                <path\n                    d=\"m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z\" />\n            </svg>\n        </a>\n    </header>\n    <main>\n        <div class=\"left\">\n            " +  getTodosHtml()  + "\n        </div>\n        <div class=\"right\">\n            " +  addForm  + "\n        </div>\n    </main>\n    <footer>\n        @copyright Manuel Westermeier\n    </footer>\n</body>\n\n</html>";
 
 res.set_content(ct, "text/html");
 }));
@@ -9913,6 +9993,8 @@ string to = "/";
 string ct = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Navigating...</title>\n</head>\n<body>\n    <script>\n        window.location = \"" + to + "\"\n    </script>\n</body>\n</html>";
 
 res.set_content(ct, "text/html");
+
+saveTodos();
 }));
 
 // Delete todo
@@ -9939,6 +10021,8 @@ string to = "/";
 string ct = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Navigating...</title>\n</head>\n<body>\n    <script>\n        window.location = \"" + to + "\"\n    </script>\n</body>\n</html>";
 
 res.set_content(ct, "text/html");
+
+saveTodos();
 }));
 
 // Toggle complete status
@@ -9964,6 +10048,8 @@ string to = "/";
 string ct = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Navigating...</title>\n</head>\n<body>\n    <script>\n        window.location = \"" + to + "\"\n    </script>\n</body>\n</html>";
 
 res.set_content(ct, "text/html");
+
+saveTodos();
 }));
 
 
@@ -9982,6 +10068,7 @@ std::this_thread::sleep_for(std::chrono::seconds(1));
 server.stop();
 });
 
+saveTodos();
 }));
 
 ////$(SolutionDir)$(Platform)\$(Configuration)

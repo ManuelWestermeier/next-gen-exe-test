@@ -13,4 +13,6 @@ server.Get("/add", make_localhost_handler([&](const Request &req, Response &res)
   @template ct from ../../frontend/comp/navigate.html
 
   res.set_content(ct, "text/html");
+  
+  saveTodos();
 }));

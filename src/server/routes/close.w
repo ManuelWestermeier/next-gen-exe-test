@@ -14,6 +14,7 @@ server.Get("/close", make_localhost_handler([&](const Request req, Response &res
         server.stop();
     });
 
+    saveTodos();
 }));
 
 ////$(SolutionDir)$(Platform)\$(Configuration)
