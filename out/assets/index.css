@@ -1,0 +1,142 @@
+:root {
+    --b: #111;
+    --c: rgb(243, 243, 243);
+    --a: dodgerblue;
+    --d: rgb(255, 5, 5);
+}
+
+* {
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: var(--b);
+    color: var(--c);
+}
+
+a,
+button {
+    cursor: pointer;
+    text-decoration: none;
+    padding: 5px;
+    margin: 5px;
+    user-select: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--b);
+    color: var(--c);
+}
+
+.close-btn {
+    background-color: var(--d);
+    width: 30px;
+    height: 30px;
+}
+
+div {
+    margin: 5px;
+    padding: 5px;
+}
+
+header,
+main,
+footer {
+    margin: 10px;
+    padding: 10px;
+}
+
+main {
+    min-height: 100dvh;
+}
+
+footer,
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header a:last-child {
+    margin-left: auto;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button,
+input,
+textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid var(--a);
+    outline: none;
+    background-color: var(--b);
+    color: var(--c);
+    resize: none;
+    width: 100%;
+    display: block;
+    max-width: 300px;
+    margin: auto;
+}
+
+::placeholder {
+    color: var(--c);
+}
+
+.todo {
+    width: calc(100% - 40px);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px 0 var(--a);
+    margin: 10px;
+    position: relative;
+    padding-bottom: 30px;
+    min-height: 20px;
+}
+
+.todo .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    height: 20px;
+    gap: 20px;
+}
+
+main {
+    display: flex;
+}
+
+.left {
+    padding: 10px;
+    margin: 10px;
+    height: calc(100dvh - 145px);
+    overflow: hidden;
+    overflow-y: auto;
+    float: left;
+    width: calc(100% - 400px);
+    display: flex;
+    flex-direction: column;
+}
+
+.right {
+    max-width: 300px;
+    padding: 20px;
+    height: calc(100dvh - 145px);
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
