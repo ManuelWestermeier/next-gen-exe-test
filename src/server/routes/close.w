@@ -4,7 +4,7 @@
 
 server.Get("/close", make_localhost_handler([&](const Request req, Response &res) {
     
-    @template page from ../frontend/closed.html
+    @template page from ../../frontend/closed.html
 
     res.set_content(page, "text/html");
 

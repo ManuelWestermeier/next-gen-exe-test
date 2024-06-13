@@ -1,0 +1,15 @@
+<div class="todo" id="todo## sf(todo.id) ##">
+
+    <h1>## todo.title ##</h1>
+    <p>## todo.content ##</p>
+    <p>## todo.date ##</p>
+
+    <form method="post" action="/complete?id=## sf(todo.id) ##">
+        <input onchange="event.target.parentNode.submit()" type="checkbox" ## (todo.completed ? "checked" : "" ) ##>
+    </form>
+
+    <form method="post" action="/delete?id=## sf(todo.id) ##">
+        <button type="submit">Delete</button>
+    </form>
+
+</div>
