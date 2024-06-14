@@ -9851,16 +9851,16 @@ void run(Server *server, int port, const std::string &rootPath)
 Server server;
 
 struct Todo {
-std::string title = "new todo";
-std::string content = "new todo";
+string title = "new todo";
+string content = "new todo";
 
 // Get the date
-std::string date = ([]() {
+string date = ([]() {
 time_t t = time(nullptr);
 tm localTime = *localtime(&t);
 
-std::ostringstream oss;
-oss << std::put_time(&localTime, "%d %h %Y|%H:%M");
+ostringstream oss;
+oss << put_time(&localTime, "%d %h %Y|%H:%M");
 
 return oss.str();
 })();
@@ -9869,49 +9869,63 @@ bool completed = false;
 
 // Get The Date
 int id = ([]() {
-return static_cast<int>(std::chrono::system_clock::to_time_t(
-std::chrono::system_clock::now()
+return static_cast<int>(chrono::system_clock::to_time_t(
+chrono::system_clock::now()
 ));
 })();
 };
 
 string fileName = ".tododata";
 
+auto replaceAll = [](string str, const string from, const string to) {
+if (from.empty())
+return str;
+
+size_t startPos = 0;
+
+while ((startPos = str.find(from, startPos)) != string::npos) {
+str.replace(startPos, from.length(), to);
+startPos += to.length();
+}
+
+return str;
+};
+
 vector<Todo> todos = ([&]() {
-std::vector<Todo> todos;
-std::ifstream file(fileName);
+vector<Todo> todos;
+ifstream file(fileName);
 
 if (!file.is_open()) {
-std::cerr << "Error opening file: " << fileName << std::endl;
+cerr << "Error opening file: " << fileName << endl;
 return todos;
 }
 
-std::string line;
+string line;
 Todo todo;
 
-while (std::getline(file, line)) {
+while (getline(file, line)) {
 todo.title = line;
 
-if (std::getline(file, line)) {
+if (getline(file, line)) {
 todo.content = line;
 } else {
 break;
 }
 
-if (std::getline(file, line)) {
+if (getline(file, line)) {
 todo.date = line;
 } else {
 break;
 }
 
-if (std::getline(file, line)) {
+if (getline(file, line)) {
 todo.completed = (line == "1");
 } else {
 break;
 }
 
-if (std::getline(file, line)) {
-todo.id = std::stoi(line);
+if (getline(file, line)) {
+todo.id = stoi(line);
 } else {
 break;
 }
@@ -9924,37 +9938,22 @@ file.close();
 return todos;
 })();
 
-auto writeFile = [](string fileName, string data) {
-
-//open file
-ofstream MyFile(fileName);
-//write file
-MyFile << data;
-//close file
-MyFile.close();
-
-};
-
-auto int2binarystring = [](int number) {
-
-};
-
 auto saveTodos = [&]() {
 
-std::ofstream file(fileName);
+ofstream file(fileName);
 
 if (!file.is_open()) {
-std::cerr << "Error opening file: " << std::endl;
+cerr << "Error opening file: " << endl;
 return;
 }
 
 for (const auto& todo : todos) {
 // Write each Todo item's details to the file
-file << todo.title << std::endl;
-file << todo.content << std::endl;
-file << todo.date << std::endl;
-file << (todo.completed ? '1' : '0') << std::endl;
-file << todo.id << std::endl;
+file << replaceAll(todo.title, "\n", "\\n") << endl;
+file << replaceAll(todo.content, "\n", "\\n").c_str() << endl;
+file << todo.date << endl;
+file << (todo.completed ? '1' : '0') << endl;
+file << todo.id << endl;
 }
 
 file.close();
@@ -9984,8 +9983,8 @@ auto title = req.get_param_value("title");
 auto content = req.get_param_value("content");
 
 Todo newTodo;
-newTodo.title = title;
-newTodo.content = content;
+newTodo.title = replaceAll(replaceAll(title, "<", "< "), "\n", "<br>");
+newTodo.content = replaceAll(replaceAll(content, "<", "< "), "\n", "<br>");
 
 todos.push_back(newTodo);
 

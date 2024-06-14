@@ -4,8 +4,8 @@ server.Get("/add", make_localhost_handler([&](const Request &req, Response &res)
   auto content = req.get_param_value("content");
 
   Todo newTodo;
-  newTodo.title = title;
-  newTodo.content = content;
+  newTodo.title = replaceAll(replaceAll(title, "<", "< "), "\n", "<br>");
+  newTodo.content = replaceAll(replaceAll(content, "<", "< "), "\n", "<br>");
 
   todos.push_back(newTodo);
 

@@ -94,6 +94,21 @@ module.exports = class Compiler {
                 return `string ${args[1]} = ${getTemplate(args[3], pathName)};`
 
             }
+            else if (fn == "@file") {
+
+                const args = line.split(/ |\t/g)
+
+                if (args[2] != "from" || args.length != 4) {
+                    error(`${pathName}:${lineIndex} error file-template syntax`)
+                    exit(1)
+                }
+
+                return `string ${args[1]} = ${getFileData(path.join(
+                    path.dirname(pathName),
+                    pathName
+                ))};`
+
+            }
             else if (fn == "@top") {
                 const lineWithoutFn = line.split(" ")
                 this.fileHeader += lineWithoutFn.slice(1, lineWithoutFn.length).join(" ") + "\n"
