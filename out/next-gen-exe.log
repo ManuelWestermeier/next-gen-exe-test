@@ -1,0 +1,10 @@
+﻿  next-gen-exe.cpp
+  index.cpp
+C:\Users\Manuel Westermeier\source\repos\next-gen-exe\out\index.cpp(10007,39): warning C4101: "e": Unreferenzierte lokale Variable
+C:\Users\Manuel Westermeier\source\repos\next-gen-exe\out\index.cpp(10035,39): warning C4101: "e": Unreferenzierte lokale Variable
+C:\Users\Manuel Westermeier\source\repos\next-gen-exe\out\index.cpp(10065,6): warning C4858: Der Rückgabewert wird verworfen: The result of 'std::async' should be stored in a variable. If the return value is discarded, the temporary 'std::future' is destroyed, waiting for an async result or evaluating a deferred result, thus defeating the purpose of 'std::async'.
+  Code wird generiert.
+  Previous IPDB not found, fall back to full compilation.
+  All 4606 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Codegenerierung ist abgeschlossen.
+  next-gen-exe.vcxproj -> C:\Users\Manuel Westermeier\source\repos\next-gen-exe\x64\Release\next-gen-exe.exe
